@@ -1,6 +1,6 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Next.js Starter Blog',
+  title: 'Long Nguyen\'s Blog',
   author: 'Long Nguyen',
   headerTitle: 'TailwindBlog',
   description: 'A blog created with Next.js and Tailwind.css',
