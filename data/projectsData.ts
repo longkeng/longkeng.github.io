@@ -35,6 +35,24 @@ const projectsData: Project[] = [
     imgSrc: '/static/images/wellcrew.png',
     href: '/projects/wellcrew',
   },
+  {
+    title: 'Melty Maiden Game',
+    description: `Android iOS ゲーム`,
+    imgSrc: '/static/images/meltymaiden.jpg',
+    href: '/projects/wellcrew',
+  },
+  {
+    title: 'GotchaWarrior(X)',
+    description: `Android iOS ゲーム`,
+    imgSrc: '/static/images/gotchawarrior.jpg',
+    href: '/projects/wellcrew',
+  },
+  {
+    title: 'Sushi panic',
+    description: `Android iOS ゲーム`,
+    imgSrc: '/static/images/sushipanic.png',
+    href: '/projects/wellcrew',
+  },
 ]
 
 export default projectsData
