@@ -1,13 +1,13 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Long Nguyen\'s Blog',
+  title: 'Long Nguyen | Japanese-standard PM & Tech Manager',
   author: 'Long Nguyen',
-  headerTitle: 'My Blog',
-  description: 'A blog created with Next.js and Tailwind.css',
+  headerTitle: 'Long Nguyen',
+  description: 'Japanese-standard Project Manager & Tech Manager with 10+ years experience delivering software for Japanese companies. Offshore development leadership, SSP/AdTech, Web & System Development.',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteUrl: 'https://longkeng.github.io',
+  siteRepo: 'https://github.com/longkeng/longkeng.github.io',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
   mastodon: 'https://mastodon.social/@mastodonuser',
