@@ -24,20 +24,16 @@ const projectsData: Project[] = [
   },
   {
     title: 'Bachelor Date',
-    description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-    to the desired date and press "Go". No more worrying about lost keys or
-    forgotten headphones with this simple yet affordable solution.`,
+    description: `Large-scale AI-powered dating platform with 1.5M users in Japan. I worked as a Project Manager, leading cross-border teams and core feature development.`,
     imgSrc: '/static/images/bachelor.webp',
-    href: '/blog/the-time-machine',
+    href: '/projects/bachelor-date',
   },
 
   {
     title: 'Well Crew',
-    description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-    to the desired date and press "Go". No more worrying about lost keys or
-    forgotten headphones with this simple yet affordable solution.`,
+    description: `Japanese HR recruitment platform for welfare and caregiving sectors. （福祉・介護業界に特化した人材紹介・求人マッチングサービス）`,
     imgSrc: '/static/images/wellcrew.png',
-    href: '/blog/the-time-machine',
+    href: '/projects/wellcrew',
   },
 ]
 
