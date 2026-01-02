@@ -3,13 +3,14 @@ const siteMetadata = {
   title: 'Long Nguyen | Japanese-standard PM & Tech Manager',
   author: 'Long Nguyen',
   headerTitle: 'Long Nguyen',
-  description: 'Japanese-standard Project Manager & Tech Manager with 10+ years experience delivering software for Japanese companies. Offshore development leadership, SSP/AdTech, Web & System Development.',
+  description:
+    'Japanese-standard Project Manager & Tech Manager with 10+ years experience delivering software for Japanese companies. Offshore development leadership, SSP/AdTech, Web & System Development.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://longkeng.github.io',
   siteRepo: 'https://github.com/longkeng/longkeng.github.io',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
-  socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
+  socialBanner: `${process.env.BASE_PATH || ''}/static/images/portfolio-featured.png`,
   mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'longnt2cvn@gmail.com',
   github: 'https://github.com/longkeng',
