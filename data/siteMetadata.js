@@ -10,7 +10,7 @@ const siteMetadata = {
   siteUrl: 'https://longkeng.github.io',
   siteRepo: 'https://github.com/longkeng/longkeng.github.io',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
-  socialBanner: `${process.env.BASE_PATH || ''}/static/images/portfolio-featured.png`,
+  socialBanner: `${process.env.BASE_PATH || ''}/static/images/portfolio-featured.jpg`,
   mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'longnt2cvn@gmail.com',
   github: 'https://github.com/longkeng',
