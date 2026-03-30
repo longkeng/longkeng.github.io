@@ -1,0 +1,335 @@
+---
+title: 'How I Use Claude Skills to Automatically Write Technical Blog Posts'
+date: '2026-03-30'
+tags: ['AI', 'Claude', 'Automation']
+description: 'A practical guide to using Claude Skills for automating technical blog post creation, from setup to deployment.'
+---
+
+# How I Use Claude Skills to Automatically Write Technical Blog Posts
+
+As a developer maintaining a technical blog, I used to spend hours every week brainstorming topics, researching, and writing posts. Then I discovered Claude Skills—and my workflow transformed completely. Now I can generate high-quality, consistent blog posts in minutes, not hours.
+
+In this guide, I'll show you exactly how I set this up and how you can do the same.
+
+## What is Claude Skills?
+
+Claude Skills is a feature in Claude Code (Anthropic's CLI/IDE tool) that lets you create reusable, specialized prompts for specific tasks. Think of it as creating a custom "expert" mode for Claude that knows exactly how to handle a particular workflow.
+
+**Key difference from normal prompting:**
+
+- **Normal prompting:** You write a new detailed prompt every time
+- **Claude Skills:** You write the prompt once, save it as a skill, and invoke it with `/skill-name`
+
+For blog writing, this means you can encode your writing style, structure preferences, and content requirements into a skill that Claude follows consistently.
+
+## Overall Workflow
+
+Here's the complete flow I use:
+
+```
+Topic Idea
+    ↓
+Invoke Claude Skill (/blog-writer)
+    ↓
+Claude generates markdown with frontmatter
+    ↓
+Review and edit (optional)
+    ↓
+Save to data/blog/ folder
+    ↓
+Git commit & push
+    ↓
+Blog auto-publishes (Next.js/GitHub Pages)
+```
+
+The entire process takes 5-10 minutes per post.
+
+## Step-by-Step Guide
+
+### Step 1: Prepare Your Blog System
+
+First, ensure you have a markdown-based blog. I use Next.js with Contentlayer, but this works with:
+
+- GitHub Pages (Jekyll)
+- Hugo
+- Gatsby
+- Any static site generator
+
+**Required folder structure:**
+
+```
+my-blog/
+├── data/
+│   └── blog/
+│       ├── post-1.mdx
+│       ├── post-2.mdx
+│       └── ...
+└── contentlayer.config.ts (or equivalent)
+```
+
+**Frontmatter format** (this is what Claude will generate):
+
+```yaml
+---
+title: 'Your Post Title'
+date: '2026-03-30'
+tags: ['tag1', 'tag2', 'tag3']
+description: 'A brief summary of the post'
+---
+```
+
+### Step 2: Create a Claude Skill
+
+Claude Skills are stored in your project settings. Here's how to create one:
+
+1. Open Claude Code
+2. Use `/update-config` to access settings
+3. Add a new skill to your `settings.json`
+
+**Example skill configuration:**
+
+```json
+{
+  "skills": {
+    "blog-writer": {
+      "description": "Generate technical blog posts with proper frontmatter",
+      "prompt": "You are a technical blogger writing for developers...[see full prompt below]"
+    }
+  }
+}
+```
+
+**The actual skill prompt I use:**
+
+````markdown
+You are a technical blogger writing for developers and technical professionals.
+
+When given a topic, you will:
+
+1. Write a comprehensive blog post (800-1200 words)
+2. Use clear, practical language
+3. Include code examples where relevant
+4. Add proper markdown frontmatter
+5. Structure with clear headings
+
+## Frontmatter format:
+
+title: "<compelling title>"
+date: "<today's date YYYY-MM-DD>"
+tags: [<3-5 relevant tags>]
+description: "<130-160 character summary>"
+
+---
+
+Content structure:
+
+- Introduction (hook the reader)
+- Main content (3-5 sections with ## headings)
+- Code examples in ```language blocks
+- Practical takeaways
+- Conclusion
+
+Writing style:
+
+- Direct and actionable
+- No filler or fluff
+- Use examples over theory
+- Assume reader is technical but may be new to topic
+
+Output the complete markdown file ready to save.
+````
+
+### Step 3: Generate a Blog Post
+
+Now you can invoke your skill with a simple command:
+
+```bash
+/blog-writer
+
+Topic: How to optimize React performance with useMemo and useCallback
+```
+
+Claude will generate a complete markdown file like this:
+
+````markdown
+---
+title: 'React Performance: When to Use useMemo and useCallback'
+date: '2026-03-30'
+tags: ['React', 'Performance', 'JavaScript', 'Optimization']
+description: 'Learn when and how to use useMemo and useCallback to optimize your React applications with practical examples.'
+---
+
+# React Performance: When to Use useMemo and useCallback
+
+React's useMemo and useCallback hooks are powerful tools for optimization,
+but they're also frequently misused...
+
+[Full blog content here]
+
+## When to Use useMemo
+
+useMemo memoizes computed values...
+
+```javascript
+const expensiveValue = useMemo(() => {
+  return computeExpensiveValue(a, b)
+}, [a, b])
+```
+````
+
+[More content...]
+
+````
+
+**What I do next:**
+
+1. Review the output (usually 90% ready)
+2. Add personal insights or examples
+3. Save to `data/blog/react-performance-memo.mdx`
+4. Commit and push
+
+### Step 4: Automate the Process (Optional)
+
+For daily blogging, I've created a simple script:
+
+```bash
+#!/bin/bash
+# generate-daily-post.sh
+
+# Get topic from RSS, API, or predefined list
+TOPIC="Latest trends in TypeScript 5.4"
+
+# Invoke Claude via CLI
+claude-code --skill blog-writer --input "$TOPIC" > data/blog/daily-$(date +%Y%m%d).mdx
+
+# Commit and push
+git add data/blog/
+git commit -m "Add daily post: $TOPIC"
+git push origin main
+````
+
+You can trigger this with:
+
+- Cron jobs (daily at 9 AM)
+- GitHub Actions (on schedule)
+- Manual webhook
+
+## Example Prompt Templates
+
+Here are variations I use for different content types:
+
+**Tutorial-focused:**
+
+```
+Write a step-by-step tutorial on [TOPIC]
+Include: Setup, implementation, common pitfalls, best practices
+Target: Intermediate developers
+Length: 1000 words
+```
+
+**Comparison post:**
+
+```
+Compare [TECH A] vs [TECH B]
+Focus on: Use cases, performance, developer experience, ecosystem
+Include decision matrix
+```
+
+**Problem-solution:**
+
+```
+Topic: [COMMON PROBLEM]
+Structure: Problem description → Why it happens → Solutions (3-4 approaches) → Recommendation
+```
+
+## Tips & Best Practices
+
+### 1. Avoid Duplicate Content
+
+Keep a topic log to prevent repeating subjects:
+
+```typescript
+// topics-used.json
+{
+  "2026-03-30": "React performance optimization",
+  "2026-03-29": "TypeScript generics explained"
+}
+```
+
+### 2. Improve Writing Quality
+
+Add these constraints to your skill:
+
+- "Avoid passive voice"
+- "Use specific examples over generic ones"
+- "Maximum 2 sentences per paragraph in introduction"
+- "Include at least one code block per section"
+
+### 3. Keep Consistency
+
+Create a style guide in your skill prompt:
+
+```
+Code style:
+- Use TypeScript by default
+- Prefer functional components
+- Include type annotations
+- Use modern ES6+ syntax
+
+Tone:
+- Conversational but professional
+- Use "you" and "we"
+- Avoid jargon without explanation
+```
+
+### 4. Add Personal Touch
+
+After Claude generates the post, I always:
+
+- Add 1-2 personal anecdotes
+- Include real-world examples from my projects
+- Update code examples to match my actual use cases
+
+This keeps the content authentic and valuable.
+
+## Personal Insight: Why This Works
+
+**What makes this powerful:**
+
+1. **Consistency:** Every post follows the same structure and quality bar
+2. **Speed:** 10 minutes vs 3 hours for a draft
+3. **No writer's block:** I can generate posts anytime
+4. **Learning tool:** Reading Claude's explanations often teaches me new angles on topics I thought I knew
+
+**Limitations to be aware of:**
+
+- Claude's knowledge cutoff means you need to verify latest features
+- Generic content needs your personal examples to stand out
+- You still need to review for accuracy
+- Best for explanatory content, not original research or opinion pieces
+
+**My rule:** Use Claude Skills for 70% of the heavy lifting, but the final 30% (personal insights, verification, examples) is all me.
+
+## Conclusion
+
+Claude Skills transformed my blog from "write when I have time" to a consistent publishing schedule. The key is not to use it as a replacement for your expertise, but as a force multiplier.
+
+**This approach is perfect for:**
+
+- Developers who know their stuff but struggle with writing
+- Technical content creators who need consistency
+- Anyone maintaining a regular blog schedule
+
+**You should NOT use this if:**
+
+- You're blogging for SEO spam (please don't)
+- Your blog's value is in unique personal takes
+- You can't verify technical accuracy
+
+Start small: Create one skill, generate one post, see how it feels. Refine the prompt based on what you wish was different. Within a week, you'll have a blog-writing assistant that knows exactly what you need.
+
+Now go write that post you've been putting off for months. Your future readers are waiting.
+
+---
+
+_Written with Claude Skills (with 30% human touch)_
